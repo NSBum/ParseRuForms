@@ -1,0 +1,3 @@
+db:
+  user: 'your_mysql_user_name'
+  pw: 'your_mysql_password'
