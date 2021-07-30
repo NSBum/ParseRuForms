@@ -85,7 +85,29 @@ Another derivative project from Hagen's text file is a sqlite3 database with a J
 
 part of speech - one of 'част','межд','прл','прч','сущ','нар','гл','дееп',  'союз','предик','предл','ввод','мест','числ'
 
-[1]: Subtypes: one of 'поряд','кол','собир','неопр','врем','обст','опред','счет',  'неизм'; подтипы используются в основном для числительных и наречий.
+### Usage
+
+#### Building the MySQL tables
+
+TBD
+
+#### Querying the database
+
+Some examples of useful database queries:
+
+1. Find the genitive (singular and plural) of the word _собака_:
+
+```sql
+SELECT w.code, w.code_parent, w.word, w.wcase
+FROM ru_words w 
+INNER JOIN ru_roots AS r on w.code_parent = r.code
+INNER JOIN ru_words_cases c ON c.id = w.wcase 
+WHERE r.word = 'собака' AND c.case_en = 'genitive';
+```
+
+### Notes
+
+[1]: Subtypes: one of 'поряд', 'кол', 'собир', 'неопр', 'врем', 'обст', 'опред', 'счет', 'неизм'; подтипы используются в основном для числительных и наречий.
 
 [2]: Sub-subtype - one of 'кач','спос','степ','места','напр','врем','цель', 'причин'; под-подтипы задействованы только для наречий.
 
