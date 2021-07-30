@@ -105,6 +105,30 @@ INNER JOIN ru_words_cases c ON c.id = w.wcase
 WHERE r.word = 'собака' AND c.case_en = 'genitive';
 ```
 
+2. Is _собака_ animate or inanimate?
+
+```sql
+SELECT DISTINCT
+CASE 
+	WHEN w.animacy = 1 THEN 'animate'
+	WHEN w.animacy = 0 THEN 'inanimate'
+	ELSE 'N/A'
+END AS AnimacyText
+FROM ru_words w 
+INNER JOIN ru_roots AS r on w.code_parent = r.code
+WHERE r.word = 'собака'
+```
+
+4. All of the participle forms of _делать_
+
+```sql
+SELECT * FROM ru_words 
+INNER JOIN ru_roots ON ru_roots.code = ru_words.code_parent
+WHERE ru_roots.word = 'делать' 
+AND ru_words.type IN (SELECT id FROM ru_words_types WHERE pos_en = 'participle')
+```
+
+
 ### Notes
 
 [1]: Subtypes: one of 'поряд', 'кол', 'собир', 'неопр', 'врем', 'обст', 'опред', 'счет', 'неизм'; подтипы используются в основном для числительных и наречий.
