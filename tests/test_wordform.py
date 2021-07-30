@@ -133,3 +133,8 @@ class TestWordForms(unittest.TestCase):
         rowstr = 'храбрейший\tпрл прев ед муж им\t4024848'
         w = wordforms.WordForm(rowstr)
         self.assertEqual('прев', w.comparative())
+
+    def testCanParseAndReturnInanimate(self):
+        rowstr = 'телевизор\tсущ неод ед муж им\t33759'
+        w = wordforms.WordForm(rowstr)
+        self.assertEqual(0, w.animacy())

@@ -11,7 +11,11 @@ def _query_value_or_skip(value: Union[int, str, bool, Plurality], q: str, quoted
             return q + f'{value.value}, '
         else:
             return q + "NULL, "
-
+    if isinstance(value, int):
+        if quoted:
+            return q + f'"{value}" ,'
+        else:
+            return q + f'{value}, '
     if value:
         if quoted:
             return q + f'"{value}" ,'

@@ -8,6 +8,8 @@ from enum import Enum
 import re
 import os
 
+DEBUG = False
+
 
 if __name__ == '__main__':
     config.dbconfig = config.load_config()['db']
@@ -15,6 +17,23 @@ if __name__ == '__main__':
     wdb.connect()
     wdb.setup_tables()
     wdb.load_normalizations()
+
+    if DEBUG:
+        p = FileParser(fp_to_parse('parsetest01.txt'))
+        while True:
+            try:
+                for w in next(p):
+                    if w.form == 'телевизор':
+                        print(w)
+                    wdb.save_word(w)
+            except StopIteration:
+                break
+        wdb.conn.commit()
+        print(f'{fn} completed')
+        wdb.derive_roots()
+        print("done")
+        wdb.close()
+        exit()
 
     line_idx = 0
     parse_dir = parse_dir()
